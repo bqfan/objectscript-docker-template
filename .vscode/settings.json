@@ -28,6 +28,7 @@
         "username": "_SYSTEM",
         "password": "SYS"
       }
-    ]
+    ],
+    "DockerRun.DisableDockerrc": true
 
 }
