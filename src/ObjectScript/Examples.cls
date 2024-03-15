@@ -255,4 +255,95 @@ ClassMethod JSON()
     write !, newstring
 }
 
+/// loop through last names of the ^PersonI global, 2 different ways
+ClassMethod SimpleLoop()
+{
+    write !, "Using argumentless For"
+    set ln = ""  // initialize to the empty string to make $Order return the first last name
+    for {        // start looping
+        set ln = $order(^PersonI("Name", ln))  // use the current last name to get the next
+        quit:(ln = "")                         // stop looping when ln becomes empty again
+        write !, ?5, ln
+    }
+    
+    write !!, "Using While"
+    set ln = $order(^PersonI("Name", ""))  // get the first last name
+    while (ln '= "") {                     // only loop if there is at least one last name
+        write !, ?5, ln
+        set ln = $order(^PersonI("Name", ln))  // use the current last name to get the next
+    }
+}
+
+/// Loop through the name index and display the records
+ClassMethod NameLoop()
+{
+    // loop through last names
+    set ln = ""
+    for {
+        set ln = $order(^PersonI("Name", ln))
+        quit:(ln = "")
+        // for each last name, loop through first names
+        set fn = ""
+        for {
+            set fn = $order(^PersonI("Name", ln, fn))
+            quit:(fn = "")
+            // for each last name and first name, loop through id numbers
+            set id = ""
+            for {
+                set id = $order(^PersonI("Name", ln, fn, id))
+                quit:(id = "")
+                // once you have an id number, get the data and display it
+                set rec = ^PersonD(id)
+                write !, $list(rec, 1),
+                      ?15, $list(rec, 2),
+                      ?30, $zdate($list(rec, 3), 2)
+            }
+        }
+    }
+}
+
+/// loop through last names that FOLLOW a substring (including the substring)
+ClassMethod FocusedLoopStart()
+{
+    read "Search for: ",substring
+    // find the last name just BEFORE the substring and then start looping
+    set ln = $order(^PersonI("Name", substring), -1)
+    for {
+        set ln = $order(^PersonI("Name", ln))
+        quit:(ln = "")
+        write !, ln
+    }
+}
+
+/// loop through last names that MATCH substring
+ClassMethod FocusedLoopStartEnd()
+{
+    read "Search for: ",substring
+    // find the last name just BEFORE the substring and then start looping
+    set ln = $order(^PersonI("Name", substring), -1)
+    for {
+        set ln = $order(^PersonI("Name", ln))
+        // quit if no match or at end
+        quit:($extract(ln, 1, $length(substring)) '= substring)
+        write !, ln
+    }
+}
+
+ClassMethod Conversions()
+{
+    write !, "abcde becomes: ", $translate("abcde", "ad", "yz")  // translate a->y, and d->z
+    write !, "abcde becomes: ", $translate("abcde", "ad", "zz")  // translate a->z, and d->z
+    write !, "abcde becomes: ", $translate("abcde", "ad", "z")   // translate a->z, and d->nothing
+    write !, "abcdebcbc becomes: ", $translate("abcdebcbc", "abc", "yz")  // translate a->y, b->z, and c->nothing
+    write !, "abcdebcbc becomes: ", $replace("abcdebcbc", "abc", "yz")    // replace abc->yz
+
+    read !, "String to translate: ", x
+    set lower = "abcdefghijklmnopqrstuvwxyz"
+    set upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    write !, "Using $translate: ", $translate(x, lower,  upper)
+    write !, "Using $zconvert: ", $zconvert(x, "U")
+    write !, "Using $zconvert for capitalizing words: ", $zconvert(x, "W")
+    write !, "Using $zstrip to remove whitespace: ", $zstrip(x, "*W")
+}
+
 }
