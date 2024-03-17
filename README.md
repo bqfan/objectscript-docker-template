@@ -1,3 +1,8 @@
+# ObjectScript Examples
+1. forked https://github.com/intersystems-community/objectscript-docker-template.git
+2. added [ObjectScript Tutorial](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=TOS_intro)
+3. added [sc.rest Tutorial and Sample Application: Contact List](https://github.com/intersystems/isc-rest/blob/main/docs/sample-phonebook.md#iscrest-tutorial-and-sample-application-contact-list)
+
 ## intersystems-objectscript-template
 This is a template for InterSystems ObjectScript Github repository.
 The template goes also with a few files which let you immediately compile your ObjectScript files in InterSystems IRIS Community Edition in a docker container
