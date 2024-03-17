@@ -13,14 +13,19 @@ zpm:USER>load -dev /home/irisowner/dev/src/samples/phonebook
 From your REST client, try the following:
 
 To allow unauthenticated access for this sample, you must give the web application the %All role. To do this:
-- Click Save, then the Application Roles tab.
+- Access to `http://localhost:<port>/csp/sys/%25CSP.Portal.Home.zen?$NAMESPACE=%25SYS`
+
+- Click **System Administration** > **Security** > **Applications** > **Web Applications**.
+- Select **/csp/USER/phonebook-sample/api**
+- In section **Security Settings**/**Allowed Authentication Methods**: Select both **Unauthenticated** and **Password**.
+- Click **Save**, then the **Application Roles** tab.
 - Select the %All role from the Available roles.
 - Click the right arrow (select) button to move the %All role to the Selected roles.
-- Click the Assign button.
+- Click the **Assign** button.
 
 In Postman:
-Set the "Accept" header to "application/json"
-Set the "Content-Type" header to "application/json"
-POST a JSON body of `{"name":"Flintstone,Fred"}` to `/csp/user/phonebook-sample/api/contact`
-PUT a JSON body of `{"name":"Rubble,Barney"}` to `/csp/user/phonebook-sample/api/contact/1`
-`GET /csp/user/phonebook-sample/api/contact/1` - you should see the result of the change you just made.
+- Set the "Accept" header to "application/json"
+- Set the "Content-Type" header to "application/json"
+- POST a JSON body of `{"name":"Flintstone,Fred"}` to `/csp/user/phonebook-sample/api/contact`
+- PUT a JSON body of `{"name":"Rubble,Barney"}` to `/csp/user/phonebook-sample/api/contact/1`
+- `GET /csp/user/phonebook-sample/api/contact/1` - you should see the result of the change you just made.
